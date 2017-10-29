@@ -42,7 +42,7 @@ add_definitions( -DMPM_SRC_DIR="${CMAKE_CURRENT_SOURCE_DIR}" )
 #
 ############################################################
 
-
+set(EIGEN3_INCLUDE_DIR "D:/Programming/MPM-Optimization")
 # Eigen3
 find_package( Eigen3 REQUIRED )
 include_directories( ${EIGEN3_INCLUDE_DIR} )

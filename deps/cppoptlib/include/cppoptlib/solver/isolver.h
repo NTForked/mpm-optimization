@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <chrono>
+#include <vector>
 
 #include "isolver.h"
 #include "../meta.h"
