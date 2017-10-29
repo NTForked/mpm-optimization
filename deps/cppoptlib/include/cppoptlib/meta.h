@@ -13,9 +13,9 @@ template <typename T>
 using Matrix = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>;
 
 typedef struct Options {
-    double gradTol;
-    double rate;
-    double init_hess;
+    float gradTol;
+    float rate;
+    float init_hess;
     size_t maxIter;
     size_t m;
     bool store_obj;

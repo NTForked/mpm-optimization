@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -83,7 +83,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -121,7 +121,8 @@
       <ImportLibrary>D:/Programming/MPM-Optimization/build/Debug/sphere.lib</ImportLibrary>
       <ProgramDataBaseFile>D:/Programming/MPM-Optimization/build/Debug/sphere.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
-      <Version></Version>
+      <Version>
+      </Version>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -129,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++11</CppLanguageStandard>
@@ -143,7 +144,8 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MPM_SRC_DIR="D:/Programming/MPM-Optimization";OMP_NESTED;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <DebugInformationFormat></DebugInformationFormat>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MPM_SRC_DIR=\"D:/Programming/MPM-Optimization\";OMP_NESTED;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -166,7 +168,8 @@
       <ImportLibrary>D:/Programming/MPM-Optimization/build/Release/sphere.lib</ImportLibrary>
       <ProgramDataBaseFile>D:/Programming/MPM-Optimization/build/Release/sphere.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
-      <Version></Version>
+      <Version>
+      </Version>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -174,7 +177,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++11</CppLanguageStandard>
@@ -188,7 +191,8 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MPM_SRC_DIR="D:/Programming/MPM-Optimization";OMP_NESTED;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <DebugInformationFormat></DebugInformationFormat>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MPM_SRC_DIR=\"D:/Programming/MPM-Optimization\";OMP_NESTED;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -211,7 +215,8 @@
       <ImportLibrary>D:/Programming/MPM-Optimization/build/MinSizeRel/sphere.lib</ImportLibrary>
       <ProgramDataBaseFile>D:/Programming/MPM-Optimization/build/MinSizeRel/sphere.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
-      <Version></Version>
+      <Version>
+      </Version>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -219,7 +224,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++11</CppLanguageStandard>
@@ -256,7 +261,8 @@
       <ImportLibrary>D:/Programming/MPM-Optimization/build/RelWithDebInfo/sphere.lib</ImportLibrary>
       <ProgramDataBaseFile>D:/Programming/MPM-Optimization/build/RelWithDebInfo/sphere.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
-      <Version></Version>
+      <Version>
+      </Version>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -319,11 +325,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D:\Programming\MPM-Optimization\src\sphere.cpp"  />
+    <ClCompile Include="D:\Programming\MPM-Optimization\src\sphere.cpp" />
     <ClInclude Include="D:\Programming\MPM-Optimization\src\Solver.hpp" />
-    <ClCompile Include="D:\Programming\MPM-Optimization\src\Solver.cpp"  />
+    <ClCompile Include="D:\Programming\MPM-Optimization\src\Solver.cpp" />
     <ClInclude Include="D:\Programming\MPM-Optimization\src\MPM.hpp" />
-    <ClCompile Include="D:\Programming\MPM-Optimization\src\MPM.cpp"  />
+    <ClCompile Include="D:\Programming\MPM-Optimization\src\MPM.cpp" />
     <ClInclude Include="D:\Programming\MPM-Optimization\src\Interp.hpp" />
     <ClInclude Include="D:\Programming\MPM-Optimization\src\Particle.hpp" />
   </ItemGroup>

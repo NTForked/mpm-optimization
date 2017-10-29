@@ -20,7 +20,7 @@ protected:
   Options settings_;
   int n_iters;
   std::vector<T> obj_vals;
-  std::vector<double> runtimes;
+  std::vector<float> runtimes;
   ISolver() {
     settings_ = Options();
   }

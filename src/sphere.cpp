@@ -22,6 +22,11 @@
 #include "Solver.hpp"
 #include <vdb.h>
 
+#include <vector>
+#include <string>
+#include <sstream>
+#include <Banana/Utils/FileHelpers.h>
+
 int main(int argc, char* argv[])
 {
     using namespace mpm;
@@ -36,12 +41,19 @@ int main(int argc, char* argv[])
     for(int i = 0; i < max_steps; ++i) {
         //std::cin.get();
 
+        std::vector<std::string> points;
+        points.reserve(solver.m_particles.size());
         solver.step(timestep);
         vdb_frame();
         for(int j = 0; j < solver.m_particles.size(); ++j) {
             Particle* p = solver.m_particles[j];
             vdb_point(p->x[0], p->x[1], p->x[2]);
+            std::stringstream ss;
+            ss << "v " << std::to_string(p->x[0]) << " " << std::to_string(p->x[1]) << " " << std::to_string(p->x[2]);
+            points.push_back(ss.str());
         }
+
+        //FileHelpers::writeFile(points, "D:/SimData/MPM/" + std::to_string(i) + ".obj");
     }
 
     return 0;

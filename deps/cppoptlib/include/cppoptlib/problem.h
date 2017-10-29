@@ -103,7 +103,7 @@ class Problem {
 
   virtual bool checkGradient(const Vector<T> & x, int accuracy = 3) {
     // TODO: check if derived class exists:
-    // int(typeid(&Rosenbrock<double>::gradient) == typeid(&Problem<double>::gradient)) == 1 --> overwritten
+    // int(typeid(&Rosenbrock<float>::gradient) == typeid(&Problem<float>::gradient)) == 1 --> overwritten
     const int D = x.rows();
     Vector<T> actual_grad(D);
     Vector<T> expected_grad(D);
@@ -113,7 +113,7 @@ class Problem {
     bool correct = true;
 
     for (int d = 0; d < D; ++d) {
-      T scale = std::max((std::max(fabs(actual_grad[d]), fabs(expected_grad[d]))), 1.);
+      T scale = std::max((std::max(fabs(actual_grad[d]), fabs(expected_grad[d]))), T(1.));
       EXPECT_NEAR(actual_grad[d], expected_grad[d], 1e-2 * scale);
       if(fabs(actual_grad[d]-expected_grad[d])>1e-2 * scale)
         correct = false;
@@ -124,7 +124,7 @@ class Problem {
 
   virtual bool checkHessian(const Vector<T> & x, int accuracy = 3) {
     // TODO: check if derived class exists:
-    // int(typeid(&Rosenbrock<double>::gradient) == typeid(&Problem<double>::gradient)) == 1 --> overwritten
+    // int(typeid(&Rosenbrock<float>::gradient) == typeid(&Problem<float>::gradient)) == 1 --> overwritten
     const int D = x.rows();
     bool correct = true;
 

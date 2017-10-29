@@ -1,16 +1,16 @@
 // Copyright (c) 2016 University of Minnesota
-// 
+//
 // MPM-OPTIMIZATION Uses the BSD 2-Clause License (http://www.opensource.org/licenses/BSD-2-Clause)
 // Redistribution and use in source and binary forms, with or without modification, are
-// permitted provided that the following conditions are met:  
+// permitted provided that the following conditions are met:
 // 1. Redistributions of source code must retain the above copyright notice, this list of
-// conditions and the following disclaimer.  
+// conditions and the following disclaimer.
 // 2. Redistributions in binary form must reproduce the above copyright notice, this list
 // of conditions and the following disclaimer in the documentation and/or other materials
-// provided with the distribution.  
+// provided with the distribution.
 // THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR  A PARTICULAR PURPOSE
-// ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF MINNESOTA, DULUTH OR CONTRIBUTORS BE 
+// ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF MINNESOTA, DULUTH OR CONTRIBUTORS BE
 // LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 // (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
 // OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -26,68 +26,64 @@
 #include "MPM.hpp"
 
 namespace mpm {
-
 class Solver;
 
 // The system as represented by an optimization problem for generic solvers
-class Objective : public cppoptlib::Problem<double> {
+class Objective : public cppoptlib::Problem<Real> {
 public:
-	Objective( Solver *solver_ ) : solver(solver_) {}
-	double value(const cppoptlib::Vector<double> &v){ throw std::runtime_error("value: shouldn't get here"); }
+    Objective(Solver* solver_) : solver(solver_) {}
+    Real value(const cppoptlib::Vector<Real>& v) { throw std::runtime_error("value: shouldn't get here"); }
 
-	// Computes value and gradient
-	double value_gradient(const cppoptlib::Vector<double> &v, cppoptlib::Vector<double> &grad);
-	Solver *solver;
-
-}; // end class ObjectiveSystem
+    // Computes value and gradient
+    Real value_gradient(const cppoptlib::Vector<Real>& v, cppoptlib::Vector<Real>& grad);
+    Solver* solver;
+};  // end class ObjectiveSystem
 
 
 class Solver {
 public:
 
-	Solver() : elapsed_s(0) {}
-	~Solver();
+    Solver() : elapsed_s(0) {}
+    ~Solver();
 
-	//
-	//	Data
-	//
+    //
+    //	Data
+    //
 
-	std::vector< GridNode* > m_grid;
-	std::vector< GridNode* > active_grid; // resized each time step
-	std::vector< Particle* > m_particles;
-	cppoptlib::lbfgssolver<double> solver;
+    std::vector<GridNode*>       m_grid;
+    std::vector<GridNode*>       active_grid;   // resized each time step
+    std::vector<Particle*>       m_particles;
+    cppoptlib::lbfgssolver<Real> solver;
 
-	//
-	//	Settings
-	//
+    //
+    //	Settings
+    //
 
-	double elapsed_s;
-	const Eigen::Vector3d gravity = Eigen::Vector3d(0.0,-9.8,0.0);
+    Real        elapsed_s;
+    const Vec3r gravity = Vec3r(0.0, -9.8, 0.0);
 
-	//
-	//	Called by the gui
-	//
+    //
+    //	Called by the gui
+    //
 
-	// Initialize the system
-	bool initialize();
+    // Initialize the system
+    bool initialize();
 
-	// Run a timestep.
-	// Returns true on success.
-	bool step( float screen_dt );
+    // Run a timestep.
+    // Returns true on success.
+    bool step(float screen_dt);
 
 private:
 
-	double compute_timestep( double screen_dt );
+    Real compute_timestep(Real screen_dt);
 
-	//
-	//	Integration
-	//
+    //
+    //	Integration
+    //
 
-	void explicit_solve();
-	void implicit_solve();
-
-}; // end class system
-
+    void explicit_solve();
+    void implicit_solve();
+};  // end class system
 } // end namespace mpm
 
 #endif
