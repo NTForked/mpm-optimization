@@ -26,12 +26,17 @@
 #include <string>
 #include <sstream>
 #include <Banana/Utils/FileHelpers.h>
+#include  <ParticleTools/ParticleSerialization.h>
 
 int main(int argc, char* argv[])
 {
     using namespace mpm;
 
     double timestep = 0.01;
+
+    Banana::ParticleSerialization pSaver("D:/SimData/MPM/", "FLIPData", "frame", nullptr);
+    pSaver.addFixedAttribute<Real>("particle_radius", ParticleSerialization::TypeReal, 1);
+    pSaver.addParticleAttribute<Real>("position", ParticleSerialization::TypeReal, 3);
 
     Solver solver;
     solver.initialize();
@@ -41,8 +46,11 @@ int main(int argc, char* argv[])
     for(int i = 0; i < max_steps; ++i) {
         //std::cin.get();
 
-        std::vector<std::string> points;
+        std::vector<Vec3r> points;
         points.reserve(solver.m_particles.size());
+        pSaver.setNParticles(solver.m_particles.size());
+        pSaver.setFixedAttribute("particle_radius", static_cast<float>(0.1));
+
         solver.step(timestep);
         vdb_frame();
         for(int j = 0; j < solver.m_particles.size(); ++j) {
@@ -50,9 +58,11 @@ int main(int argc, char* argv[])
             vdb_point(p->x[0], p->x[1], p->x[2]);
             std::stringstream ss;
             ss << "v " << std::to_string(p->x[0]) << " " << std::to_string(p->x[1]) << " " << std::to_string(p->x[2]);
-            points.push_back(ss.str());
+            points.push_back(Vec3r(p->x[0], p->x[1], p->x[2]));
         }
 
+        pSaver.setParticleAttribute("position", points);
+        pSaver.flushAsync(i);
         //FileHelpers::writeFile(points, "D:/SimData/MPM/" + std::to_string(i) + ".obj");
     }
 

@@ -26,10 +26,10 @@ namespace cppoptlib {
  * @tparam Ord order of solver
  */
 
-template<typename T>
-class lbfgssolver : public ISolver<T, 1> {
+template<typename RealType>
+class lbfgssolver : public ISolver<RealType, 1> {
 public:
-    void minimize(Problem<T>& objFunc, Vector<T>& x0)
+    void minimize(Problem<RealType>& objFunc, EgVector<RealType>& x0)
     {
         int   _m      = std::min(int(this->settings_.maxIter), 10);
         int   _noVars = x0.size();
@@ -37,12 +37,12 @@ public:
         float _eps_x  = 1e-8;
 
 
-        Eigen::MatrixXf s = Eigen::MatrixXf::Zero(_noVars, _m);
-        Eigen::MatrixXf y = Eigen::MatrixXf::Zero(_noVars, _m);
+        EgMatrix<RealType> s = EgMatrix<RealType>::Zero(_noVars, _m);
+        EgMatrix<RealType> y = EgMatrix<RealType>::Zero(_noVars, _m);
 
-        Vector<float> alpha = Vector<float>::Zero(_m);
-        Vector<float> rho   = Vector<float>::Zero(_m);
-        Vector<float> grad(_noVars), q(_noVars), grad_old(_noVars), x_old(_noVars);
+        EgVector<float> alpha = EgVector<float>::Zero(_m);
+        EgVector<float> rho   = EgVector<float>::Zero(_m);
+        EgVector<float> grad(_noVars), q(_noVars), grad_old(_noVars), x_old(_noVars);
 
         //	float f = objFunc.value(x0);
         float f              = objFunc.value_gradient(x0, grad);
@@ -83,7 +83,7 @@ public:
                 alpha_init = std::min(1.0, 1.0 / grad.lpNorm<Eigen::Infinity>());
             }
 
-            const float rate = MoreThuente<T, decltype(objFunc), 1>::linesearch(x0, -q,  objFunc, alpha_init);
+            const float rate = MoreThuente<RealType, decltype(objFunc), 1>::linesearch(x0, -q,  objFunc, alpha_init);
             //		const float rate = linesearch(objFunc, x0, -q, f, grad, 1.0);
             x0 = x0 - rate * q;
             if((x_old - x0).squaredNorm() < _eps_x) {
@@ -102,8 +102,8 @@ public:
                 break;
             }
 
-            Vector<float> s_temp = x0 - x_old;
-            Vector<float> y_temp = grad - grad_old;
+            EgVector<float> s_temp = x0 - x_old;
+            EgVector<float> y_temp = grad - grad_old;
 
             // update the history
             if(k < _m) {

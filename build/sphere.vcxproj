@@ -81,9 +81,21 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>D:\Programming\Banana\Build\$(Configuration);D:\Programming\Banana\Externals\tbb_win\lib\intel64\vc14;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <LibraryPath>D:\Programming\Banana\Build\$(Configuration);D:\Programming\Banana\Externals\tbb_win\lib\intel64\vc14;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>D:\Programming\Banana\Build\$(Configuration);D:\Programming\Banana\Externals\tbb_win\lib\intel64\vc14;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <LibraryPath>D:\Programming\Banana\Build\$(Configuration);D:\Programming\Banana\Externals\tbb_win\lib\intel64\vc14;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\tbb_win\include;D:\Programming\Banana\Externals\spdlog\include;D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;D:\Programming\Banana\Simulation;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -113,7 +125,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>BananaCore.lib;Simulation.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -130,7 +142,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\tbb_win\include;D:\Programming\Banana\Externals\spdlog\include;D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;D:\Programming\Banana\Simulation;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++11</CppLanguageStandard>
@@ -160,7 +172,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>BananaCore.lib;Simulation.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -177,7 +189,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\tbb_win\include;D:\Programming\Banana\Externals\spdlog\include;D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;D:\Programming\Banana\Simulation;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++11</CppLanguageStandard>
@@ -207,7 +219,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>BananaCore.lib;Simulation.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -224,7 +236,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Programming\Banana\Externals\tbb_win\include;D:\Programming\Banana\Externals\spdlog\include;D:\Programming\Banana\Externals\json\src;D:\Programming\Banana\Externals\glm;D:\Programming\Banana\BananaCore;D:\Programming\MPM-Optimization;D:\Programming\MPM-Optimization\deps\cppoptlib\include;D:\Programming\MPM-Optimization\src;D:\Programming\Banana\Simulation;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++11</CppLanguageStandard>
@@ -253,7 +265,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>BananaCore.lib;Simulation.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -326,6 +338,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D:\Programming\MPM-Optimization\src\sphere.cpp" />
+    <ClInclude Include="..\deps\cppoptlib\include\cppoptlib\meta.h" />
+    <ClInclude Include="..\deps\cppoptlib\include\cppoptlib\problem.h" />
+    <ClInclude Include="..\deps\cppoptlib\include\cppoptlib\timer.h" />
     <ClInclude Include="D:\Programming\MPM-Optimization\src\Solver.hpp" />
     <ClCompile Include="D:\Programming\MPM-Optimization\src\Solver.cpp" />
     <ClInclude Include="D:\Programming\MPM-Optimization\src\MPM.hpp" />

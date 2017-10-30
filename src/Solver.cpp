@@ -44,10 +44,27 @@ bool Solver::initialize()
         }
     }
 
+
+
+    sphere_center = Vec3r(3.f, 7.f, 3.f);
+    for(Real x = sphere_center[0] - sphere_rad; x < sphere_center[0] + sphere_rad; x += step) {
+        for(Real y = sphere_center[1] - sphere_rad; y < sphere_center[1] + sphere_rad; y += step) {
+            for(Real z = sphere_center[2] - sphere_rad; z < sphere_center[2] + sphere_rad; z += step) {
+                Vec3r pos(x, y, z);
+                if(glm::length(pos - sphere_center) < sphere_rad) {
+                    Particle* p = new pNeoHookean();
+                    p->x = pos;
+                    p->m = p_mass;
+                    m_particles.push_back(p);
+                }
+            }
+        }
+    }
+
     // The boundaries are determined by these variables, and assumed positive.
     // I.e. the boundary is 0 to gridsize*cellsize.
     MPM::cellsize = Vec3r(.5, .5, .5);
-    MPM::gridsize = Vec3i(16, 16, 16);
+    MPM::gridsize = Vec3i(16, 24, 16);
 
     for(int i = 0; i < MPM::gridsize[0] * MPM::gridsize[1] * MPM::gridsize[2]; ++i) {
         m_grid.push_back(new GridNode(i));
@@ -59,7 +76,7 @@ bool Solver::initialize()
     std::cout << "Num Nodes: " << m_grid.size() << std::endl;
 
     // Set up the solver
-    cppoptlib::Options settings;
+    cppoptlib::Options<Real> settings;
     settings.maxIter = 20;
     settings.gradTol = 1e-8;
     solver.settings_ = settings;
@@ -95,7 +112,7 @@ bool Solver::step(float screen_dt)
     MPM::p2g_velocity(m_particles, active_grid);       // step 1
 
     // Steps 4, 5 in course notes
-    //	explicit_solve();
+    //explicit_solve();
     implicit_solve();
     MPM::grid_collision(active_grid);
 
@@ -136,7 +153,7 @@ void Solver::explicit_solve()
     }     // end for all active grid
 } // end compute forces
 
-Real Objective::value_gradient(const cppoptlib::Vector<Real>& v, cppoptlib::Vector<Real>& grad)
+Real Objective::value_gradient(const cppoptlib::EgVector<Real>& v, cppoptlib::EgVector<Real>& grad)
 {
     Real tot_energy = 0.0;
 
@@ -197,7 +214,7 @@ Real Objective::value_gradient(const cppoptlib::Vector<Real>& v, cppoptlib::Vect
 void Solver::implicit_solve()
 {
     // Initial guess of grid velocities
-    cppoptlib::Vector<Real> v(active_grid.size() * 3);
+    cppoptlib::EgVector<Real> v(active_grid.size() * 3);
         #pragma omp parallel for
     for(int i = 0; i < active_grid.size(); ++i) {
         for(int j = 0; j < 3; ++j) {

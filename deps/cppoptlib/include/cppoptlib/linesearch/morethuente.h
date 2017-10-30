@@ -6,7 +6,7 @@
 #include <cmath>
 
 namespace cppoptlib {
-template<typename Dtype, typename P, int Ord>
+template<typename RealType, typename P, int Ord>
 class MoreThuente {
 public:
 
@@ -20,40 +20,40 @@ public:
      * @return step-width
      */
 
-    static Dtype linesearch(const Vector<Dtype>& x, const Vector<Dtype>& searchDir, P& objFunc,
-                            const Dtype alpha_init = 1.0)
+    static RealType linesearch(const EgVector<RealType>& x, const EgVector<RealType>& searchDir, P& objFunc,
+                               const RealType alpha_init = 1.0)
     {
         // assume step width
-        Dtype ak = alpha_init;
+        RealType ak = alpha_init;
 
-        Vector<Dtype> g = x.eval();
-//    Dtype fval = objFunc.value(x);
-//    objFunc.gradient(x, g);
-        Dtype fval = objFunc.value_gradient(x, g);
+        EgVector<RealType> g = x.eval();
+        //    RealType fval = objFunc.value(x);
+        //    objFunc.gradient(x, g);
+        RealType fval = objFunc.value_gradient(x, g);
 
-        Vector<Dtype> s  = searchDir.eval();
-        Vector<Dtype> xx = x.eval();
+        EgVector<RealType> s  = searchDir.eval();
+        EgVector<RealType> xx = x.eval();
 
         cvsrch(objFunc, xx, fval, g, ak, s);
 
         return ak;
     }
 
-    static int cvsrch(P& objFunc, Vector<Dtype>& x, Dtype f, Vector<Dtype>& g, Dtype& stp, Vector<Dtype>& s)
+    static int cvsrch(P& objFunc, EgVector<RealType>& x, RealType f, EgVector<RealType>& g, RealType& stp, EgVector<RealType>& s)
     {
         // we rewrite this from MIN-LAPACK and some MATLAB code
-        int         info   = 0;
-        int         infoc  = 1;
-        const Dtype xtol   = 1e-15;
-        const Dtype ftol   = 1e-4;
-        const Dtype gtol   = 1e-2;
-        const Dtype stpmin = 1e-15;
-        const Dtype stpmax = 1e15;
-        const Dtype xtrapf = 4;
-        const int   maxfev = 20;
-        int         nfev   = 0;
+        int            info   = 0;
+        int            infoc  = 1;
+        const RealType xtol   = RealType(1e-15);
+        const RealType ftol   = RealType(1e-4);
+        const RealType gtol   = RealType(1e-2);
+        const RealType stpmin = RealType(1e-15);
+        const RealType stpmax = RealType(1e15);
+        const RealType xtrapf = RealType(4);
+        const int      maxfev = 20;
+        int            nfev   = 0;
 
-        Dtype dginit = g.dot(s);
+        RealType dginit = g.dot(s);
         if(dginit >= 0.0) {
             // no descent direction
             // TODO: handle this case
@@ -63,21 +63,21 @@ public:
         bool brackt = false;
         bool stage1 = true;
 
-        Dtype         finit  = f;
-        Dtype         dgtest = ftol * dginit;
-        Dtype         width  = stpmax - stpmin;
-        Dtype         width1 = 2 * width;
-        Vector<Dtype> wa     = x.eval();
+        RealType           finit  = f;
+        RealType           dgtest = ftol * dginit;
+        RealType           width  = stpmax - stpmin;
+        RealType           width1 = 2 * width;
+        EgVector<RealType> wa     = x.eval();
 
-        Dtype stx = 0.0;
-        Dtype fx  = finit;
-        Dtype dgx = dginit;
-        Dtype sty = 0.0;
-        Dtype fy  = finit;
-        Dtype dgy = dginit;
+        RealType stx = 0.0;
+        RealType fx  = finit;
+        RealType dgx = dginit;
+        RealType sty = 0.0;
+        RealType fy  = finit;
+        RealType dgy = dginit;
 
-        Dtype stmin;
-        Dtype stmax;
+        RealType stmin;
+        RealType stmax;
 
         while(true) {
             // make sure we stay in the interval when setting min/max-step-width
@@ -105,15 +105,15 @@ public:
             x = wa + stp * s;
 
 
-//    f = objFunc.value(x);
-//    objFunc.gradient(x, g);
+            //    f = objFunc.value(x);
+            //    objFunc.gradient(x, g);
             f = objFunc.value_gradient(x, g);
 
 
 
             nfev++;
-            Dtype dg     = g.dot(s);
-            Dtype ftest1 = finit + stp * dgtest;
+            RealType dg     = g.dot(s);
+            RealType ftest1 = finit + stp * dgtest;
 
             // all possible convergence tests
             if((brackt & ((stp <= stmin) | (stp >= stmax))) | (infoc == 0)) {
@@ -150,12 +150,12 @@ public:
             }
 
             if(stage1 & (f <= fx) & (f > ftest1)) {
-                Dtype fm   = f - stp * dgtest;
-                Dtype fxm  = fx - stx * dgtest;
-                Dtype fym  = fy - sty * dgtest;
-                Dtype dgm  = dg - dgtest;
-                Dtype dgxm = dgx - dgtest;
-                Dtype dgym = dgy - dgtest;
+                RealType fm   = f - stp * dgtest;
+                RealType fxm  = fx - stx * dgtest;
+                RealType fym  = fy - sty * dgtest;
+                RealType dgm  = dg - dgtest;
+                RealType dgxm = dgx - dgtest;
+                RealType dgym = dgy - dgtest;
 
                 cstep(stx, fxm, dgxm, sty, fym, dgym, stp, fm, dgm, brackt, stmin, stmax, infoc);
 
@@ -180,8 +180,8 @@ public:
         return 0;
     }
 
-    static int cstep(Dtype& stx, Dtype& fx, Dtype& dx, Dtype& sty, Dtype& fy, Dtype& dy, Dtype& stp,
-                     Dtype& fp, Dtype& dp, bool& brackt, Dtype& stpmin, Dtype& stpmax, int& info)
+    static int cstep(RealType& stx, RealType& fx, RealType& dx, RealType& sty, RealType& fy, RealType& dy, RealType& stp,
+                     RealType& fp, RealType& dp, bool& brackt, RealType& stpmin, RealType& stpmax, int& info)
     {
         info = 0;
         bool bound = false;
@@ -192,26 +192,26 @@ public:
             return -1;
         }
 
-        Dtype sgnd = dp * (dx / fabs(dx));
+        RealType sgnd = dp * (dx / fabs(dx));
 
-        Dtype stpf = 0;
-        Dtype stpc = 0;
-        Dtype stpq = 0;
+        RealType stpf = 0;
+        RealType stpc = 0;
+        RealType stpq = 0;
 
         if(fp > fx) {
             info  = 1;
             bound = true;
-            Dtype theta = 3. * (fx - fp) / (stp - stx) + dx + dp;
-            Dtype s     = std::max(theta, std::max(dx, dp));
-            Dtype gamma = s * sqrt((theta / s) * (theta / s) - (dx / s) * (dp / s));
+            RealType theta = 3. * (fx - fp) / (stp - stx) + dx + dp;
+            RealType s     = std::max(theta, std::max(dx, dp));
+            RealType gamma = s * sqrt((theta / s) * (theta / s) - (dx / s) * (dp / s));
             if(stp < stx) {
                 gamma = -gamma;
             }
-            Dtype p = (gamma - dx) + theta;
-            Dtype q = ((gamma - dx) + gamma) + dp;
-            Dtype r = p / q;
+            RealType p = (gamma - dx) + theta;
+            RealType q = ((gamma - dx) + gamma) + dp;
+            RealType r = p / q;
             stpc = stx + r * (stp - stx);
-            stpq = stx + ((dx / ((fx - fp) / (stp - stx) + dx)) / 2.) * (stp - stx);
+            stpq = stx + ((dx / ((fx - fp) / (stp - stx) + dx)) / RealType(2.0)) * (stp - stx);
             if(fabs(stpc - stx) < fabs(stpq - stx)) {
                 stpf = stpc;
             } else {
@@ -221,16 +221,16 @@ public:
         } else if(sgnd < 0.0) {
             info  = 2;
             bound = false;
-            Dtype theta = 3 * (fx - fp) / (stp - stx) + dx + dp;
-            Dtype s     = std::max(theta, std::max(dx, dp));
-            Dtype gamma = s * sqrt((theta / s) * (theta / s) - (dx / s) * (dp / s));
+            RealType theta = 3 * (fx - fp) / (stp - stx) + dx + dp;
+            RealType s     = std::max(theta, std::max(dx, dp));
+            RealType gamma = s * sqrt((theta / s) * (theta / s) - (dx / s) * (dp / s));
             if(stp > stx) {
                 gamma = -gamma;
             }
 
-            Dtype p = (gamma - dp) + theta;
-            Dtype q = ((gamma - dp) + gamma) + dx;
-            Dtype r = p / q;
+            RealType p = (gamma - dp) + theta;
+            RealType q = ((gamma - dp) + gamma) + dx;
+            RealType r = p / q;
             stpc = stp + r * (stx - stp);
             stpq = stp + (dp / (dp - dx)) * (stx - stp);
             if(fabs(stpc - stp) > fabs(stpq - stp)) {
@@ -242,15 +242,15 @@ public:
         } else if(fabs(dp) < fabs(dx)) {
             info  = 3;
             bound = 1;
-            Dtype theta = 3 * (fx - fp) / (stp - stx) + dx + dp;
-            Dtype s     = std::max(theta, std::max(dx, dp));
-            Dtype gamma = s * sqrt(std::max(static_cast<Dtype>(0.), (theta / s) * (theta / s) - (dx / s) * (dp / s)));
+            RealType theta = 3 * (fx - fp) / (stp - stx) + dx + dp;
+            RealType s     = std::max(theta, std::max(dx, dp));
+            RealType gamma = s * sqrt(std::max(static_cast<RealType>(0.), (theta / s) * (theta / s) - (dx / s) * (dp / s)));
             if(stp > stx) {
                 gamma = -gamma;
             }
-            Dtype p = (gamma - dp) + theta;
-            Dtype q = (gamma + (dx - dp)) + gamma;
-            Dtype r = p / q;
+            RealType p = (gamma - dp) + theta;
+            RealType q = (gamma + (dx - dp)) + gamma;
+            RealType r = p / q;
             if((r < 0.0) & (gamma != 0.0)) {
                 stpc = stp + r * (stx - stp);
             } else if(stp > stx) {
@@ -276,16 +276,16 @@ public:
             info  = 4;
             bound = false;
             if(brackt) {
-                Dtype theta = 3 * (fp - fy) / (sty - stp) + dy + dp;
-                Dtype s     = std::max(theta, std::max(dy, dp));
-                Dtype gamma = s * sqrt((theta / s) * (theta / s) - (dy / s) * (dp / s));
+                RealType theta = 3 * (fp - fy) / (sty - stp) + dy + dp;
+                RealType s     = std::max(theta, std::max(dy, dp));
+                RealType gamma = s * sqrt((theta / s) * (theta / s) - (dy / s) * (dp / s));
                 if(stp > sty) {
                     gamma = -gamma;
                 }
 
-                Dtype p = (gamma - dp) + theta;
-                Dtype q = ((gamma - dp) + gamma) + dy;
-                Dtype r = p / q;
+                RealType p = (gamma - dp) + theta;
+                RealType q = ((gamma - dp) + gamma) + dy;
+                RealType r = p / q;
                 stpc = stp + r * (sty - stp);
                 stpf = stpc;
             } else if(stp > stx) {
@@ -317,9 +317,9 @@ public:
 
         if(brackt & bound) {
             if(sty > stx) {
-                stp = std::min(stx + static_cast<Dtype>(0.66) * (sty - stx), stp);
+                stp = std::min(stx + static_cast<RealType>(0.66) * (sty - stx), stp);
             } else {
-                stp = std::max(stx + static_cast<Dtype>(0.66) * (sty - stx), stp);
+                stp = std::max(stx + static_cast<RealType>(0.66) * (sty - stx), stp);
             }
         }
 

@@ -32,10 +32,10 @@ class Solver;
 class Objective : public cppoptlib::Problem<Real> {
 public:
     Objective(Solver* solver_) : solver(solver_) {}
-    Real value(const cppoptlib::Vector<Real>& v) { throw std::runtime_error("value: shouldn't get here"); }
+    Real value(const cppoptlib::EgVector<Real>& v) { throw std::runtime_error("value: shouldn't get here"); }
 
     // Computes value and gradient
-    Real value_gradient(const cppoptlib::Vector<Real>& v, cppoptlib::Vector<Real>& grad);
+    Real value_gradient(const cppoptlib::EgVector<Real>& v, cppoptlib::EgVector<Real>& grad);
     Solver* solver;
 };  // end class ObjectiveSystem
 

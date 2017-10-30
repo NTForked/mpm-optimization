@@ -49,7 +49,7 @@ static inline void oriented_svd(const Mat3x3r& F, Vec3r& S, Mat3x3r& U, Mat3x3r&
 // Particle (material point) class
 class Particle {
 public:
-    Particle() : m(0.1), vol(0.0), v(0, 0, 0), x(0, 0, 0)
+    Particle() : m(Real(0.1)), vol(Real(0.0)), v(0, 0, 0), x(0, 0, 0)
     {
         Fe    = Mat3x3r(1.0);
         tempP = Mat3x3r(1.0);
@@ -128,7 +128,7 @@ public:
         assert(isreal(t2));
         assert(isreal(t3));
         return (t1 + t2 + t3);
-    }   // end compute energy density
+    } // end compute energy density
 };    // end class neohookean particle
 }     // end namespace mpm
 
